@@ -6,9 +6,42 @@
 	</head>
 	<body>
 	<h1> Enter the zipcode of the place you want the highest and lowest temperature </h1>
-		<form method="get" action="app/weather" align="center">
+		<form id="request" align="center">
 			<input type="text" name="zipcode" id="zipcode" placeholder="Zipcode of the place"style="width: 300px;" />
-			<input type="submit" id="encode" value="Submit"/>
+			<input type="submit" id="send" value="Submit"/>
 		</form>
+		<p id="response"> </p>
 	</body>
+	<script type="text/javascript">
+		(function() {
+		  var httpRequest;
+		  document.getElementById("send").addEventListener('click', makeRequest);
+
+		  function makeRequest() {
+			httpRequest = new XMLHttpRequest();
+
+			if (!httpRequest) {
+			  alert('Giving up :( Cannot create an XMLHTTP instance');
+			  return false;
+			}
+			httpRequest.onreadystatechange = readResponse;
+			console.log(document.getElementById("zipcode").value);
+			httpRequest.open('GET', 'app/weather?zipcode='+document.getElementById("zipcode").value, true);
+			httpRequest.send();
+		  }
+
+		  function readResponse() {
+			if (httpRequest.readyState === XMLHttpRequest.DONE) {
+			  if (httpRequest.status === 200) {
+				  alert(httpRequest.responseText);
+				  //var data = JSON.parse(httpRequest.responseText);
+				  
+			  } else {
+				alert('There was a problem with the request.');
+			  }
+			}
+		  }
+		})();
+		
+	</script>
 </html>

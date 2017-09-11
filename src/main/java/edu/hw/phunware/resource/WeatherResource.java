@@ -23,9 +23,10 @@ public class WeatherResource {
 	@GET
 	public Response getWeatherData() {
 		try {
-			JSONArray results = weatherService.getWeatherData(zipCode);
+			String results = weatherService.getWeatherData(zipCode);
+			JSONArray resp = new JSONArray(results);
 			JSONObject response = new JSONObject();
-			response.put("result", results);
+			response.put("result", resp);
 			return Response.status(200)
 					.entity(response.toString())
 					.build();

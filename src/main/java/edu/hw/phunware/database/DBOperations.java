@@ -40,7 +40,7 @@ public class DBOperations {
 			if(doc == null) {
 				JSONObject obj = new JSONObject();
 				obj.put("status", false);
-				obj.put("error", "Please check the Zipcode you've entered");
+				obj.put("error", "Please enter a valid zipcode");
 				
 				return obj.toString();
 			}
