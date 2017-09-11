@@ -7,9 +7,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import edu.hw.phunware.service.WeatherService;
 
 @Path("weather")
+@Produces(MediaType.APPLICATION_JSON)
 public class WeatherResource {
 	
 	@QueryParam("zipcode") private String zipCode;
@@ -17,9 +21,22 @@ public class WeatherResource {
 	WeatherService weatherService =  new WeatherService();
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getWeatherData() {
-		Response response = weatherService.getWeatherData(zipCode);
-		return response;
-	}
+		try {
+			JSONArray results = weatherService.getWeatherData(zipCode);
+			JSONObject response = new JSONObject();
+			response.put("result", results);
+			return Response
+					.status(200)
+					.entity(response.toString())
+					.build();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return Response
+					.status(500)
+					.entity("error while processing request")
+					.build();
+		}
+	} 
 }

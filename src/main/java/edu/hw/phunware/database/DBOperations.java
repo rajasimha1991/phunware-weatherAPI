@@ -27,7 +27,7 @@ public class DBOperations {
 		return instance;
 	}
 	
-	public String getDataforZipcode(String zipcode) {
+	public String getDataforZipcode(String zipcode) throws Exception {
 		
 		MongoClient mongoClient = null;
 		
@@ -38,27 +38,29 @@ public class DBOperations {
 			Document doc = collection.find(eq("Zipcode",zipcode)).first();
 			
 			if(doc == null) {
+				JSONObject obj = new JSONObject();
+				obj.put("status", false);
+				obj.put("error", "Please check the Zipcode you've entered");
 				
-				return new JSONObject().put("result", "No data for the input").toString();
+				return obj.toString();
 			}
 			
 			doc.remove("_id");
-			
-			JSONObject result = new JSONObject();
-			result.put("result", doc);
-			return result.toString();
+			JSONObject obj = new JSONObject(doc.toJson());
+			obj.put("status", true);
+			return obj.toString();
 			
 		}
 		catch(Exception me) {
 			me.printStackTrace();
-			return "error in database connection";
+			throw new Exception("issue while reading data from database");
 		}
 		finally {
 			
 		}
 	}
 	
-	public void writeData(WeatherData wd) {
+	public void writeData(WeatherData wd) throws Exception {
 		
 		MongoClient mongoClient = null;
 		
@@ -77,6 +79,7 @@ public class DBOperations {
 		}
 		catch(Exception me) {
 			me.printStackTrace();
+			throw new Exception("issue while writing data to the database");
 		}
 		finally {
 			

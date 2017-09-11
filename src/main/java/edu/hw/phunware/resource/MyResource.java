@@ -11,7 +11,7 @@ public class MyResource {
 	@GET
 	@Produces (MediaType.TEXT_PLAIN)
 	public String testMethod() {
-		return "testing succedded!";
+		return "testing success!";
 	}
 
 }

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.ws.rs.client.Client;
@@ -21,7 +20,7 @@ import edu.hw.phunware.model.WeatherData;
 
 public class DataCollector {
 
-	public static void main(String[] args) throws UnsupportedEncodingException{
+	public static void main(String[] args) {
 		
 		BufferedReader br = null;
 		Client client = ClientBuilder.newClient();
@@ -29,7 +28,7 @@ public class DataCollector {
 		final String COMMA_DELIMITER = ",";
 		
 		try {
-			br = new BufferedReader(new FileReader("zipcodes-test.csv"));
+			br = new BufferedReader(new FileReader("src/main/resources/zipcodes-test.csv"));
 			String line = "";
 			
 			while((line = br.readLine()) != null) {
@@ -67,6 +66,8 @@ public class DataCollector {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally

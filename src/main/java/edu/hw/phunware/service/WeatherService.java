@@ -1,38 +1,39 @@
 package edu.hw.phunware.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ws.rs.core.Response;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import edu.hw.phunware.database.DBOperations;
 
 public class WeatherService {
 	
-	public Response getWeatherData(String zipcode) {
-		//create a database connection
-		//lookup the zipcode in the database and handle exceptions
-		//construct the WeatherData from the fields and return it
+	public JSONArray getWeatherData(String zipcode) {
 		
-		try {
-			String result  = DBOperations.getInstance().getDataforZipcode(zipcode);
-			return Response.status(200).entity(result).build();
-		}
-		catch(Exception e) {
-			return Response.status(500).entity("error with database connection").build();
-		}
+		String[] arr = zipcode.split(",");
+		return getWeatherData(arr);
 	}
 	
-	public List<Response> getWeatherData(List<String> zipcodes){
+	public JSONArray getWeatherData(String[] zipcodes){
 		
-		List<Response> result = new ArrayList<>();
-		
+		JSONArray result = new JSONArray();
 		for(String zip: zipcodes) {
-			Response res = getWeatherData(zip);
-			result.add(res);
+			String res = getWeatherDataforZipcode(zip);
+			JSONObject data = new JSONObject(res);
+			result.put(data);
 		}
 		
 		return result;
+	}
+	
+	private String getWeatherDataforZipcode(String zip) {
+		
+		try {
+			String result  = DBOperations.getInstance().getDataforZipcode(zip);
+			return result;
+		}
+		catch(Exception e) {
+			return "error with database connection";
+		}
 	}
 
 }
