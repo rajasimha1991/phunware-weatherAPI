@@ -71,8 +71,8 @@ public class DBOperations {
 			
 			Document document = new Document("Zipcode", wd.getZipCode())
 					.append("CityName", wd.getCityName())
-					.append("Low Temp", wd.getLowTemp())
-					.append("High Temp", wd.getHighTemp())
+					.append("LowTemp", wd.getLowTemp())
+					.append("HighTemp", wd.getHighTemp())
 					.append("Forecast", wd.getForecast());
 
 			collection.insertOne(document);
