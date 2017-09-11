@@ -34,4 +34,5 @@ The web service takes zipcode or zipcodes(comma separated) as query parameter an
       "status": false
     }
   ]
-}```
+}
+```
