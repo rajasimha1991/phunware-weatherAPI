@@ -26,15 +26,13 @@ public class WeatherResource {
 			JSONArray results = weatherService.getWeatherData(zipCode);
 			JSONObject response = new JSONObject();
 			response.put("result", results);
-			return Response
-					.status(200)
+			return Response.status(200)
 					.entity(response.toString())
 					.build();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return Response
-					.status(500)
+			return Response.status(500)
 					.entity("error while processing request")
 					.build();
 		}
