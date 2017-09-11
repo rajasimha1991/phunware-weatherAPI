@@ -11,7 +11,8 @@ The web service takes zipcode or zipcodes(comma separated) as query parameter an
 ```localhost:8080/weather-api/app/weather?zipcode=73301,75011, 12345```
 
 **Sample Response:**
-```{
+```
+{
   "result": [
     {
       "Forecast": "Sunny",
