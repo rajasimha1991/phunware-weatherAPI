@@ -11,9 +11,14 @@
 			<input type="button" id="send" value="Submit" onclick = "makeRequest()"/>
 		</form>
 		<br></br>
-		<div id="response" align="center"> </div>
+		<div id="result" align="center"> </div>
 	<script type="text/javascript">
 	function makeRequest() {
+		
+		if(document.getElementById("response") != null){
+			document.getElementById("response").remove();
+		}
+		
 		
  		var httpRequest = new XMLHttpRequest();
 
@@ -26,7 +31,11 @@
 				  if (httpRequest.status === 200) {
 					  var myObj = JSON.parse(httpRequest.responseText);
 					  var arr = myObj.result;
-					  document.getElementById("response").innerHTML  = JSON.stringify(myObj);
+					  
+					  var childDiv = document.createElement("div");
+					  childDiv.setAttribute("id","response");
+					  document.getElementById("result").appendChild(childDiv);
+
 					  for(var i=0; i<arr.length; i++){
 						  
 						  var outerDiv = document.createElement("div");
@@ -40,6 +49,7 @@
 						  else{
 							  
 							  var zip =  document.createElement("p");
+							  zip.style.fontWeight = "900";
 							  zip.innerHTML = "Zipcode: "+arr[i].Zipcode;
 							  var city =  document.createElement("p");
 							  city.innerHTML = "City Name: "+arr[i].CityName;
